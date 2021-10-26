@@ -1,0 +1,30 @@
+{
+  "name": "opensearchtransformer",
+  "version": "1.0.0",
+  "description": "Convert json-rule-engine rule to opensearch(elasticSearch) Query",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "start": "node ./dist",
+    "dev": "ts-node ./src",
+    "dev:sample": "npm run build && node ./dist/test/index.js"
+  },
+  "keywords": [
+    "opensearch",
+    "elasticsearch",
+    "json-rule-enigne",
+    "transformer"
+  ],
+  "author": "Siva Ganesh <sivadoog0808@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "elastic-builder": "^2.16.0",
+    "json-rules-engine": "^6.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "typescript": "^4.4.4"
+  }
+}
