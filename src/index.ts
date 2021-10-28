@@ -14,6 +14,8 @@ export default class OpenSearchTransformer {
     } else {
       throw "tenant_uuid must be positive integer";
     }
+
+    return this;
   }
 
   public setRule(rule: Rule) {
@@ -40,6 +42,7 @@ export default class OpenSearchTransformer {
     }
 
     this.rule = rule;
+    return this;
   }
 
   private checkValues() {
@@ -51,7 +54,7 @@ export default class OpenSearchTransformer {
     }
   }
 
-  processTheRule = (rule: any, isMain: boolean = false) => {
+  private processTheRule = (rule: any, isMain: boolean = false) => {
     let result: any = null;
     const ruleKey = Object.keys(rule);
 
@@ -101,7 +104,7 @@ export default class OpenSearchTransformer {
     return result;
   };
 
-  async transform() {
+  public async transform() {
     try {
       this.checkValues();
     } catch (error) {
