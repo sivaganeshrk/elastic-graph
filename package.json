@@ -22,9 +22,11 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.15.0",
     "elastic-builder": "^2.16.0",
-    "json-rules-engine": "^6.1.2"
+    "json-rules-engine": "^6.1.2",
+    "luxon": "^2.0.2"
   },
   "devDependencies": {
+    "@types/luxon": "^2.0.5",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.6",
     "chai": "^4.3.4",
