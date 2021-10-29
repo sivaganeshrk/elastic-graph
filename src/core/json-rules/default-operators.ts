@@ -1,4 +1,4 @@
-import Operator from "./operator";
+import { Operator } from "./operator";
 import elasticBuilder from "elastic-builder";
 import { DateTime } from "luxon";
 import { DynamicObject } from "../../Types/index";

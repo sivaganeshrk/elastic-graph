@@ -1,4 +1,4 @@
-export default class Operator {
+export class Operator {
   name: string;
   callback: Function;
   factValueValidator: Function;
