@@ -8,7 +8,7 @@ describe("json to search Query Transformer Test", () => {
       .setRule({
         all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
       })
-      .buildQuery();
+      .toJson();
 
     expect(query).to.deep.equal({
       query: { bool: { must: { term: { "fact-1": "testdata" } } } },
@@ -22,7 +22,7 @@ describe("json to search Query Transformer Test", () => {
       .setRule({
         all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
       })
-      .buildQuery();
+      .toJson();
     expect(query).to.deep.equal({
       query: {
         bool: {
@@ -42,7 +42,7 @@ describe("json to search Query Transformer Test", () => {
       })
       .offset(10)
       .size(10)
-      .buildQuery();
+      .toJson();
 
     expect(query).to.deep.equal({
       from: 10,

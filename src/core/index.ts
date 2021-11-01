@@ -199,7 +199,7 @@ export default class Transformer {
    *
    * @returns {object} the builded search query
    */
-  public buildQuery(): object {
+  public toJson(): object {
     return this.queryBuilder().toJSON();
   }
 }

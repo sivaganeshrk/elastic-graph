@@ -44,7 +44,7 @@ describe("Transformer Operator Test", () => {
       ],
     });
 
-    transformer.buildQuery();
+    transformer.toJson();
   });
 
   it("Adding new operator to transformer-Error", () => {
@@ -76,7 +76,7 @@ describe("Transformer Operator Test", () => {
             },
           ],
         })
-        .buildQuery();
+        .toJson();
     } catch (error: any) {
       result = error.message;
     }
