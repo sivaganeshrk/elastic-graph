@@ -16,6 +16,8 @@ export default class Transformer {
   private operators: Map<string, Operator>;
   private _routingValue: string | number | null = null;
   private rule: TopLevelCondition | undefined;
+  private _from: number = 0;
+  private _size: number = 0;
   constructor() {
     this.operators = new Map();
     defaultOperator.map((data) => {
@@ -101,6 +103,26 @@ export default class Transformer {
     return this;
   }
 
+  offset(value: number) {
+    if (!Validator.isPositiveNumber(value)) {
+      throw new Error("offset value must be a positive integer");
+    }
+
+    this._from = value;
+
+    return this;
+  }
+
+  size(value: number) {
+    if (!Validator.isPositiveNumber(value)) {
+      throw new Error("size value must be a positive integer");
+    }
+
+    this._size = value;
+
+    return this;
+  }
+
   private processTheRule = (rule: any, isMain: boolean = false) => {
     let result: any = null;
     const ruleKey = Object.keys(rule);
@@ -130,7 +152,7 @@ export default class Transformer {
           rule.additionalProperties ?? {}
         );
       } else {
-        throw new Error("Invalid Operator");
+        throw new Error(`Invalid Operator : ${rule.operator}`);
       }
     }
 
@@ -152,19 +174,32 @@ export default class Transformer {
     }
   }
 
-  /**
-   *
-   * @returns {object} the builded search query
-   */
-  public transform() {
+  private queryBuilder() {
     try {
       this.checkValues();
     } catch (error) {
       throw error;
     }
-    return elasticBuilder
+    const query = elasticBuilder
       .requestBodySearch()
-      .query(this.processTheRule(this.rule, true) as any)
-      .toJSON();
+      .query(this.processTheRule(this.rule, true));
+
+    if (this._from > 0) {
+      query.from(this._from);
+    }
+
+    if (this._size > 0) {
+      query.size(this._size);
+    }
+
+    return query;
+  }
+
+  /**
+   *
+   * @returns {object} the builded search query
+   */
+  public buildQuery(): object {
+    return this.queryBuilder().toJSON();
   }
 }

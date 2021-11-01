@@ -4,7 +4,7 @@
   "description": "Convert json-rule-engine rule to opensearch(elasticSearch) Query",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register 'test/**/*.ts' --timeout 60000 --exit",
+    "test": "mocha -r ts-node/register 'test/**/*.test.ts' --timeout 60000 --exit",
     "build": "tsc",
     "build:watch": "tsc -w",
     "start": "node ./dist",
@@ -26,6 +26,7 @@
     "luxon": "^2.0.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.22",
     "@types/luxon": "^2.0.5",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.6",
