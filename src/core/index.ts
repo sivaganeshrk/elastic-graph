@@ -1,18 +1,21 @@
 import { Operator } from "./json-rules";
-import { DynamicObject } from "../Types";
+import {
+  ConditionProperties,
+  DynamicObject,
+  NestedCondition,
+  TopLevelCondition,
+} from "../Types";
 import defaultOperator from "./json-rules/default-operators";
 // import { Engine, TopLevelCondition as Rule } from "json-rules-engine";
 import { Engine } from "json-rules-engine";
 
 import { Validator } from "../utils";
 import elasticBuilder from "elastic-builder";
-// export type TopLevelCondition = Rule;
-export type Rule = any;
 
 export default class Transformer {
   private operators: Map<string, Operator>;
   private _routingValue: string | number | null = null;
-  private rule: Rule | undefined;
+  private rule: TopLevelCondition | undefined;
   constructor() {
     this.operators = new Map();
     defaultOperator.map((data) => {
@@ -20,6 +23,11 @@ export default class Transformer {
     });
   }
 
+  /**
+   * Add a custom operator definition
+   * @param {string} operatorName - operator identifier
+   * @param {function(fieldName,value,additionalProperties)} callback - the method to execute when the operator is encountered
+   */
   addOperator(
     operatorName: string | Operator,
     callback: (
@@ -39,6 +47,10 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * Remove a custom operator definition
+   * @param operatorName - operator identifier
+   */
   removeOperator(operatorName: string) {
     if (typeof operatorName === "string") {
       this.operators.delete(operatorName);
@@ -48,13 +60,21 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   *
+   * @param routingValue - routing value
+   *
+   */
   setRoutingValue(routingValue: string | number) {
     this._routingValue = routingValue;
 
     return this;
   }
-
-  public setRule(rule: Rule) {
+  /**
+   * setRule
+   * @param rule - json-rules-engine rule format
+   */
+  public setRule(rule: TopLevelCondition) {
     if (Validator.isNonEmptyObject(rule)) {
     } else {
       throw "rule must be a non empty object";
@@ -107,7 +127,7 @@ export default class Transformer {
         result = operator.generate(
           rule.fact,
           rule.value,
-          rule.additionalProperties
+          rule.additionalProperties ?? {}
         );
       } else {
         throw new Error("Invalid Operator");
@@ -132,6 +152,10 @@ export default class Transformer {
     }
   }
 
+  /**
+   *
+   * @returns {object} the builded search query
+   */
   public transform() {
     try {
       this.checkValues();
@@ -144,21 +168,3 @@ export default class Transformer {
       .toJSON();
   }
 }
-
-const trans = new Transformer();
-
-trans
-  .setRule({
-    all: [
-      {
-        fact: "name",
-        operator: "greaterThanRelative",
-        value: 1,
-        additionalProperties: { format: "X" },
-      },
-      { fact: "age", operator: "equal", value: 21 },
-    ],
-  })
-  .setRoutingValue("hbvsdjhf");
-
-console.log(JSON.stringify(trans.transform()));
