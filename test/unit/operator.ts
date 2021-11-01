@@ -1,5 +1,5 @@
 var assert = require("assert");
-import Operator from "../../src/core/json-rules/operator";
+import { Operator } from "../../src/core/json-rules/operator";
 describe("Operator Adding Test", function () {
   it("Creating new operator-success", function () {
     const newOne = new Operator("sum", (name: any, value: any) => {

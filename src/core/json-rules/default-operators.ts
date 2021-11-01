@@ -2,6 +2,7 @@ import { Operator } from "./operator";
 import elasticBuilder from "elastic-builder";
 import { DateTime } from "luxon";
 import { DynamicObject } from "../../Types/index";
+import { debug } from "../../utils";
 
 const defaultOperator: Operator[] = [];
 
@@ -155,9 +156,10 @@ defaultOperator.push(
       value: number,
       additionalProperties: DynamicObject = {}
     ) => {
+      debug("callback", additionalProperties);
       return elasticBuilder
         .rangeQuery(fieldName)
-        .gt(formateDateRelative(value, additionalProperties["formate"]));
+        .gt(formateDateRelative(value, additionalProperties["format"]));
     }
   )
 );
@@ -172,7 +174,7 @@ defaultOperator.push(
     ) => {
       return elasticBuilder
         .rangeQuery(fieldName)
-        .lt(formateDateRelative(value, additionalProperties["formate"]));
+        .lt(formateDateRelative(value, additionalProperties["format"]));
     }
   )
 );
@@ -206,7 +208,7 @@ defaultOperator.push(
         .mustNot(
           elasticBuilder.termQuery(
             fieldName,
-            formateDateRelative(value, additionalProperties["formate"])
+            formateDateRelative(value, additionalProperties["format"])
           )
         );
     }

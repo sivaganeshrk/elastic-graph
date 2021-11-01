@@ -1,3 +1,6 @@
+import { DynamicObject } from "../../Types";
+import { debug } from "../../utils";
+
 export class Operator {
   name: string;
   callback: Function;
@@ -28,10 +31,11 @@ export class Operator {
    * @param {any} value - value
    * @returns - query instance
    */
-  generate(fieldName: any, value: any) {
+  generate(fieldName: string, value: any, additionalProperties: DynamicObject) {
+    debug("generate", additionalProperties);
     return (
       this.factValueValidator(fieldName, value) &&
-      this.callback(fieldName, value)
+      this.callback(fieldName, value, additionalProperties)
     );
   }
 }
