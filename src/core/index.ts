@@ -265,6 +265,16 @@ export default class Transformer {
     return this.queryBuilder().toJSON();
   }
 
+  setAggregator(aggregator: AggregatorRule[]) {
+    if (Array.isArray(aggregator)) {
+      this.aggregatorRule = this.aggregatorRule.concat(aggregator);
+    } else {
+      throw new Error("aggregator in must be a instance of a Array");
+    }
+
+    return this;
+  }
+
   sum(name: string | AggregatorRule[], fieldName: string = "") {
     if (Array.isArray(name)) {
     } else {
@@ -321,16 +331,3 @@ export default class Transformer {
     return this;
   }
 }
-
-const transformer = new Transformer();
-const query = transformer
-  .setRule({
-    all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
-  })
-  .sum("sum_test", "testField")
-  .max("max_test", "testField")
-  .avg("avg_test", "testField")
-  .min("min_test", "testField").limit(10).offset(10)
-  .toJson();
-
-console.log(JSON.stringify(query));
