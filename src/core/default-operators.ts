@@ -30,9 +30,11 @@ defaultOperator.push(
     "containsString",
     (
       fieldName: string,
-      value: {},
+      value: string,
       additionalProperties: DynamicObject = {}
-    ) => {}
+    ) => {
+      elasticBuilder.matchQuery(fieldName, value);
+    }
   )
 );
 

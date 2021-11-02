@@ -202,4 +202,6 @@ export default class Transformer {
   public toJson(): object {
     return this.queryBuilder().toJSON();
   }
+
+  sum(){} 
 }

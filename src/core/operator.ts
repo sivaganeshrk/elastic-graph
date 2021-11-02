@@ -29,12 +29,13 @@ export class Operator {
    * Takes the field name and value and convert it into the query based on the callback given
    * @param {any} fieldName - field name
    * @param {any} value - value
+   * @param {object} additionalProperties - Additional Properties for the query builder
    * @returns - query instance
    */
   generate(fieldName: string, value: any, additionalProperties: DynamicObject) {
     debug("generate", additionalProperties);
     return (
-      this.factValueValidator(fieldName, value) &&
+      this.factValueValidator(fieldName, value, additionalProperties) &&
       this.callback(fieldName, value, additionalProperties)
     );
   }
