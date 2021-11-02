@@ -15,12 +15,13 @@ import { Validator } from "../utils";
 import elasticBuilder from "elastic-builder";
 import { Aggregator } from "./aggregator";
 import defaultAggregator from "./default-aggs";
+import { QueryBuilder } from "./queryBuilder";
 
 export default class Transformer {
   private operators: Map<string, Operator>;
   private aggregator: Map<string, Aggregator>;
   private _routingValue: string | number | null = null;
-  private rule: TopLevelCondition | undefined;
+  private rule: TopLevelCondition | null = null;
   private aggregatorRule: AggregatorRule[] = [];
   private sortRule: Sort[] = [];
   private _from: number = 0;
@@ -168,106 +169,23 @@ export default class Transformer {
     return this;
   }
 
-  private processTheRule = (rule: any, isMain: boolean = false) => {
-    let result: any = null;
-    const ruleKey = Object.keys(rule);
-
-    if (ruleKey.includes("any") || ruleKey.includes("all")) {
-      let output: any = [];
-      // @ts-ignore
-      for (const data of rule[ruleKey]) {
-        output.push(this.processTheRule(data));
-      }
-      if (!output.includes(null)) {
-        switch (ruleKey[0]) {
-          case "all":
-            result = elasticBuilder.boolQuery().must(output);
-            break;
-          case "any":
-            result = elasticBuilder.boolQuery().should(output);
-            break;
-        }
-      }
-    } else {
-      const operator = this.operators.get(rule.operator);
-      if (operator) {
-        result = operator.generate(
-          rule.fact,
-          rule.value,
-          rule.additionalProperties ?? {}
-        );
-      } else {
-        throw new Error(`Invalid Operator : ${rule.operator}`);
-      }
-    }
-
-    if (isMain && this._routingValue) {
-      return elasticBuilder
-        .boolQuery()
-        .must([
-          result,
-          elasticBuilder.termQuery("_routing", this._routingValue),
-        ]);
-    }
-
-    return result;
-  };
-
-  private checkValues() {
-    if (!this.rule) {
-      throw new Error("rule is required");
-    }
-  }
-
-  private queryBuilder() {
-    try {
-      this.checkValues();
-    } catch (error) {
-      throw error;
-    }
-    const query = elasticBuilder
-      .requestBodySearch()
-      .query(this.processTheRule(this.rule, true));
-
-    if (this._from > 0) {
-      query.from(this._from);
-    }
-
-    if (this._size > 0) {
-      query.size(this._size);
-    }
-
-    if (this.sortRule.length > 0) {
-      for (const sort of this.sortRule) {
-        query.sort(elasticBuilder.sort(sort.fieldName, sort.order));
-      }
-    }
-
-    if (this.aggregatorRule.length > 0) {
-      let aggregatorResult = [];
-      for (const aggregator of this.aggregatorRule) {
-        const aggregatorExecuter = this.aggregator.get(aggregator.aggregator);
-        aggregatorResult.push(
-          aggregatorExecuter?.generate(
-            aggregator.name,
-            aggregator.fieldName,
-            aggregator.additionalProperties ?? {}
-          )
-        );
-      }
-
-      query.aggregations(aggregatorResult);
-    }
-
-    return query;
-  }
-
   /**
    *
    * @returns {object} the builded search query
    */
   public toJson(): object {
-    return this.queryBuilder().toJSON();
+    return new QueryBuilder(
+      this.operators,
+      this.aggregator,
+      this.rule,
+      this.aggregatorRule,
+      this.sortRule,
+      this._routingValue,
+      this._from,
+      this._size
+    )
+      .queryBuilder()
+      .toJSON();
   }
 
   setAggregator(aggregator: AggregatorRule[]) {
@@ -280,10 +198,14 @@ export default class Transformer {
     return this;
   }
 
+  private aggsWrapper(data: AggregatorRule) {
+    this.aggregatorRule.push(data);
+  }
+
   sum(name: string | AggregatorRule[], fieldName: string = "") {
     if (Array.isArray(name)) {
     } else {
-      this.aggregatorRule.push({
+      this.aggsWrapper({
         name: name,
         aggregator: "sum",
         fieldName: fieldName,
@@ -297,7 +219,7 @@ export default class Transformer {
   avg(name: string | AggregatorRule[], fieldName: string = "") {
     if (Array.isArray(name)) {
     } else {
-      this.aggregatorRule.push({
+      this.aggsWrapper({
         name: name,
         aggregator: "avg",
         fieldName: fieldName,
@@ -311,7 +233,7 @@ export default class Transformer {
   max(name: string | AggregatorRule[], fieldName: string = "") {
     if (Array.isArray(name)) {
     } else {
-      this.aggregatorRule.push({
+      this.aggsWrapper({
         name: name,
         aggregator: "max",
         fieldName: fieldName,
@@ -325,7 +247,7 @@ export default class Transformer {
   min(name: string | AggregatorRule[], fieldName: string = "") {
     if (Array.isArray(name)) {
     } else {
-      this.aggregatorRule.push({
+      this.aggsWrapper({
         name: name,
         aggregator: "min",
         fieldName: fieldName,
