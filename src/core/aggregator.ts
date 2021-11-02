@@ -40,7 +40,6 @@ export class Aggregator {
    */
   generate(
     name: string,
-    aggregator: string,
     fieldName: string,
     additionalProperties: DynamicObject
   ) {

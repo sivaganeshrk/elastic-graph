@@ -1,5 +1,5 @@
-import { DynamicObject } from "../../Types";
-import { debug } from "../../utils";
+import { DynamicObject } from "../Types";
+import { debug } from "../utils";
 
 export class Operator {
   name: string;

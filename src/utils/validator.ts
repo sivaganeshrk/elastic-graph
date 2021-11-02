@@ -44,4 +44,25 @@ export class Validator {
 
     return result;
   }
+
+  static isString(val: any) {
+    let result = false;
+    try {
+      result = typeof val === "string";
+    } catch (e) {
+      throw e;
+    }
+    return result;
+  }
+
+  static isNonEmptyString(val: any) {
+    let result = false;
+    try {
+      result = this.isString(val) && val.length > 0;
+    } catch (e) {
+      throw e;
+    }
+
+    return result;
+  }
 }

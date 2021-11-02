@@ -1,6 +1,6 @@
 import { Aggregator } from "./aggregator";
 import elasticBuilder from "elastic-builder";
-import { DynamicObject } from "../../Types";
+import { DynamicObject } from "../Types";
 
 const defaultAggregator: Aggregator[] = [];
 

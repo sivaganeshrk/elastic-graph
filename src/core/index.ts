@@ -1,27 +1,38 @@
-import { Operator } from "./json-rules";
+import { Operator } from "./operator";
 import {
+  AggregatorRule,
   ConditionProperties,
   DynamicObject,
   NestedCondition,
   TopLevelCondition,
 } from "../Types";
-import defaultOperator from "./json-rules/default-operators";
+import defaultOperator from "./default-operators";
 // import { Engine, TopLevelCondition as Rule } from "json-rules-engine";
 import { Engine } from "json-rules-engine";
 
 import { Validator } from "../utils";
 import elasticBuilder from "elastic-builder";
+import { Aggregator } from "./aggregator";
+import defaultAggregator from "./default-aggs";
 
 export default class Transformer {
   private operators: Map<string, Operator>;
+  private aggregator: Map<string, Aggregator>;
   private _routingValue: string | number | null = null;
   private rule: TopLevelCondition | undefined;
+  private aggregatorRule: AggregatorRule[] = [];
   private _from: number = 0;
   private _size: number = 0;
   constructor() {
     this.operators = new Map();
+    this.aggregator = new Map();
+
     defaultOperator.map((data) => {
       this.addOperator(data, () => {});
+    });
+
+    defaultAggregator.map((data) => {
+      this.addAggregator(data, () => {});
     });
   }
 
@@ -42,6 +53,9 @@ export default class Transformer {
     if (operatorName instanceof Operator) {
       operator = operatorName;
     } else {
+      if (!Validator.isNonEmptyString(operatorName)) {
+        throw new Error("operatorName must be non empty string");
+      }
       operator = new Operator(operatorName, callback);
     }
 
@@ -54,10 +68,42 @@ export default class Transformer {
    * @param operatorName - operator identifier
    */
   removeOperator(operatorName: string) {
-    if (typeof operatorName === "string") {
+    if (Validator.isNonEmptyString(operatorName)) {
       this.operators.delete(operatorName);
     } else {
-      throw new Error("operatorName mus be string");
+      throw new Error("operatorName must be non empty string");
+    }
+    return this;
+  }
+
+  addAggregator(
+    aggregatorName: string | Aggregator,
+    callback: (
+      name: string,
+      fieldName: string,
+      additionalProperties: DynamicObject
+    ) => any
+  ) {
+    let aggregator;
+    if (aggregatorName instanceof Aggregator) {
+      aggregator = aggregatorName;
+    } else {
+      if (!Validator.isNonEmptyString(aggregatorName)) {
+        throw new Error("aggregatorName must be a non empty string");
+      }
+      aggregator = new Aggregator(aggregatorName, callback);
+    }
+
+    this.aggregator.set(aggregator.name, aggregator);
+
+    return this;
+  }
+
+  removeAggregator(aggregatorName: string) {
+    if (Validator.isNonEmptyString(aggregatorName)) {
+      this.aggregator.delete(aggregatorName);
+    } else {
+      throw new Error("aggregatorName must be non empty string");
     }
     return this;
   }
@@ -113,7 +159,7 @@ export default class Transformer {
     return this;
   }
 
-  size(value: number) {
+  limit(value: number) {
     if (!Validator.isPositiveNumber(value)) {
       throw new Error("size value must be a positive integer");
     }
@@ -192,6 +238,22 @@ export default class Transformer {
       query.size(this._size);
     }
 
+    if (this.aggregatorRule.length > 0) {
+      let aggregatorResult = [];
+      for (const aggregator of this.aggregatorRule) {
+        const aggregatorExecuter = this.aggregator.get(aggregator.aggregator);
+        aggregatorResult.push(
+          aggregatorExecuter?.generate(
+            aggregator.name,
+            aggregator.fieldName,
+            aggregator.additionalProperties ?? {}
+          )
+        );
+      }
+
+      query.aggregations(aggregatorResult);
+    }
+
     return query;
   }
 
@@ -203,5 +265,72 @@ export default class Transformer {
     return this.queryBuilder().toJSON();
   }
 
-  sum(){} 
+  sum(name: string | AggregatorRule[], fieldName: string = "") {
+    if (Array.isArray(name)) {
+    } else {
+      this.aggregatorRule.push({
+        name: name,
+        aggregator: "sum",
+        fieldName: fieldName,
+        additionalProperties: {},
+      });
+    }
+
+    return this;
+  }
+
+  avg(name: string | AggregatorRule[], fieldName: string = "") {
+    if (Array.isArray(name)) {
+    } else {
+      this.aggregatorRule.push({
+        name: name,
+        aggregator: "avg",
+        fieldName: fieldName,
+        additionalProperties: {},
+      });
+    }
+
+    return this;
+  }
+
+  max(name: string | AggregatorRule[], fieldName: string = "") {
+    if (Array.isArray(name)) {
+    } else {
+      this.aggregatorRule.push({
+        name: name,
+        aggregator: "max",
+        fieldName: fieldName,
+        additionalProperties: {},
+      });
+    }
+
+    return this;
+  }
+
+  min(name: string | AggregatorRule[], fieldName: string = "") {
+    if (Array.isArray(name)) {
+    } else {
+      this.aggregatorRule.push({
+        name: name,
+        aggregator: "min",
+        fieldName: fieldName,
+        additionalProperties: {},
+      });
+    }
+
+    return this;
+  }
 }
+
+const transformer = new Transformer();
+const query = transformer
+  .setRule({
+    all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
+  })
+  .sum("sum_test", "testField")
+  .max("max_test", "testField")
+  .avg("avg_test", "testField")
+  .min("min_test", "testField").limit(10).offset(10)
+  .toJson();
+
+console.log(JSON.stringify(query));

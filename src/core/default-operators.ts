@@ -1,8 +1,8 @@
 import { Operator } from "./operator";
 import elasticBuilder from "elastic-builder";
 import { DateTime } from "luxon";
-import { DynamicObject } from "../../Types/index";
-import { debug } from "../../utils";
+import { DynamicObject } from "../Types/index";
+import { debug } from "../utils";
 
 const defaultOperator: Operator[] = [];
 
