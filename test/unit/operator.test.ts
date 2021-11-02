@@ -1,7 +1,7 @@
 var assert = require("assert");
 import { expect } from "chai";
 import Transformer from "../../src";
-import { Operator } from "../../src/core/json-rules/operator";
+import { Operator } from "../../src/core/operator";
 import elasticBuilder from "elastic-builder";
 describe("Operator Class Test", () => {
   it("Creating new operator-success", () => {

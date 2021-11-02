@@ -55,9 +55,6 @@ export default class Transformer {
     if (operatorName instanceof Operator) {
       operator = operatorName;
     } else {
-      if (!Validator.isNonEmptyString(operatorName)) {
-        throw new Error("operatorName must be non empty string");
-      }
       operator = new Operator(operatorName, callback);
     }
 
@@ -349,18 +346,3 @@ export default class Transformer {
     return this;
   }
 }
-
-const transformer = new Transformer();
-
-const query = transformer
-  .setRule({
-    all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
-  })
-  .sort("testField_1", "asc")
-  .sort("testField_2", "asc")
-  .sort([
-    { fieldName: "testField_3", order: "asc" },
-    { fieldName: "testField_4", order: "asc" },
-  ])
-  .toJson();
-console.log(JSON.stringify(query));
