@@ -33,7 +33,6 @@ export class Operator {
    * @returns - query instance
    */
   generate(fieldName: string, value: any, additionalProperties: DynamicObject) {
-    debug("generate", additionalProperties);
     return (
       this.factValueValidator(fieldName, value, additionalProperties) &&
       this.callback(fieldName, value, additionalProperties)

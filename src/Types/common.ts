@@ -26,5 +26,5 @@ export interface AggregatorRule {
 
 export interface Sort {
   fieldName: string;
-  order: "desc" | "asc";
+  order: "desc" | "asc" | string;
 }

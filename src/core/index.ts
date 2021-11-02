@@ -4,6 +4,7 @@ import {
   ConditionProperties,
   DynamicObject,
   NestedCondition,
+  Sort,
   TopLevelCondition,
 } from "../Types";
 import defaultOperator from "./default-operators";
@@ -21,6 +22,7 @@ export default class Transformer {
   private _routingValue: string | number | null = null;
   private rule: TopLevelCondition | undefined;
   private aggregatorRule: AggregatorRule[] = [];
+  private sortRule: Sort[] = [];
   private _from: number = 0;
   private _size: number = 0;
   constructor() {
@@ -238,6 +240,12 @@ export default class Transformer {
       query.size(this._size);
     }
 
+    if (this.sortRule.length > 0) {
+      for (const sort of this.sortRule) {
+        query.sort(elasticBuilder.sort(sort.fieldName, sort.order));
+      }
+    }
+
     if (this.aggregatorRule.length > 0) {
       let aggregatorResult = [];
       for (const aggregator of this.aggregatorRule) {
@@ -330,4 +338,29 @@ export default class Transformer {
 
     return this;
   }
+
+  sort(fieldName: string | Sort[], order: "asc" | "desc" = "asc") {
+    if (Array.isArray(fieldName)) {
+      this.sortRule = this.sortRule.concat(fieldName);
+    } else {
+      this.sortRule.push({ fieldName: fieldName, order: order });
+    }
+
+    return this;
+  }
 }
+
+const transformer = new Transformer();
+
+const query = transformer
+  .setRule({
+    all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
+  })
+  .sort("testField_1", "asc")
+  .sort("testField_2", "asc")
+  .sort([
+    { fieldName: "testField_3", order: "asc" },
+    { fieldName: "testField_4", order: "asc" },
+  ])
+  .toJson();
+console.log(JSON.stringify(query));
