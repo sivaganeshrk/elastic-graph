@@ -76,6 +76,11 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * Add a custom aggregator definition
+   * @param {string} aggregatorName - aggregator identifier
+   * @param {function(name,fieldName,additionalProperties)} callback - the method to execute when the aggregator is encountered
+   */
   addAggregator(
     aggregatorName: string | Aggregator,
     callback: (
@@ -99,6 +104,10 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * Remove a custom aggregator definition
+   * @param operatorName - aggregator identifier
+   */
   removeAggregator(aggregatorName: string) {
     if (Validator.isNonEmptyString(aggregatorName)) {
       this.aggregator.delete(aggregatorName);
@@ -109,7 +118,7 @@ export default class Transformer {
   }
 
   /**
-   *
+   * Set Routing Value For the query
    * @param routingValue - routing value
    *
    */
@@ -118,6 +127,7 @@ export default class Transformer {
 
     return this;
   }
+
   /**
    * setRule
    * @param rule - json-rules-engine rule format
@@ -149,6 +159,10 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * Set offset value for the query
+   * @param {number} value - offset value
+   */
   offset(value: number) {
     if (!Validator.isPositiveNumber(value)) {
       throw new Error("offset value must be a positive integer");
@@ -159,6 +173,10 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * Set limit value for the query
+   * @param value - limit value
+   */
   limit(value: number) {
     if (!Validator.isPositiveNumber(value)) {
       throw new Error("size value must be a positive integer");
@@ -170,7 +188,7 @@ export default class Transformer {
   }
 
   /**
-   *
+   * Build a query based on the user given input
    * @returns {object} the builded search query
    */
   public toJson(): object {
