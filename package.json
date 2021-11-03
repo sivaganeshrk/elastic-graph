@@ -1,5 +1,5 @@
 {
-  "name": "opensearchtransformer",
+  "name": "searchdbquerybuilder",
   "version": "1.0.0-beta",
   "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
   "main": "openSearchTransformer",
@@ -29,6 +29,9 @@
     "url": "https://github.com/sivaganeshrk/openSearchTransformer.git"
   },
   "homepage": "https://github.com/sivaganeshrk/openSearchTransformer",
+  "bugs": {
+    "url": "https://github.com/sivaganeshrk/openSearchTransformer/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "@elastic/elasticsearch": "^7.15.0",
