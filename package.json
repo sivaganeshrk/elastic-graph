@@ -1,8 +1,14 @@
 {
   "name": "opensearchtransformer",
   "version": "1.0.0",
-  "description": "Convert json-rule-engine rule to opensearch(elasticSearch) Query",
-  "main": "index.js",
+  "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
+  "main": "openSearchTransformer",
+  "bin": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "scripts": {
     "test": "mocha -r ts-node/register 'test/**/*.test.ts' --timeout 60000 --exit",
     "build": "tsc",
@@ -18,6 +24,11 @@
     "transformer"
   ],
   "author": "Siva Ganesh <sivadoog0808@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sivaganeshrk/openSearchTransformer.git"
+  },
+  "homepage": "https://github.com/sivaganeshrk/openSearchTransformer",
   "license": "MIT",
   "dependencies": {
     "@elastic/elasticsearch": "^7.15.0",

@@ -24,7 +24,12 @@ export interface AggregatorRule {
   additionalProperties?: DynamicObject;
 }
 
+export interface AggregatorInput {
+  fieldName: string;
+  name: string;
+}
+
 export interface Sort {
   fieldName: string;
-  order: "desc" | "asc" | string;
+  order: "desc" | "asc";
 }
