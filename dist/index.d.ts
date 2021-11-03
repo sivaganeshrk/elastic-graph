@@ -1,5 +1,5 @@
-import Transformer from "./core";
 import esb from "elastic-builder";
-export declare const searchBuilder: typeof Transformer;
+import Transformer from "./core/index";
 export declare const elasticBuilder: typeof esb;
 export * from "./Types";
+export default Transformer;
