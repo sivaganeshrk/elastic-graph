@@ -1,9 +1,11 @@
 {
   "name": "search-builder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
   "main": "search-builder",
-  "bin": "./dist/index.js",
+  "bin": {
+    "search-builder": "./dist/index.js"
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist/",
