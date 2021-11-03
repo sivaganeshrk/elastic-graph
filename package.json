@@ -2,7 +2,7 @@
   "name": "search-builder",
   "version": "1.0.0",
   "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
-  "main": "openSearchTransformer",
+  "main": "search-builder",
   "bin": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
