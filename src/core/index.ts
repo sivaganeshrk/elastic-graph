@@ -1,5 +1,6 @@
 import { Operator } from "./operator";
 import {
+  AggregatorInput,
   AggregatorRule,
   ConditionProperties,
   DynamicObject,
@@ -220,8 +221,23 @@ export default class Transformer {
     this.aggregatorRule.push(data);
   }
 
-  sum(name: string | AggregatorRule[], fieldName: string = "") {
+  /**
+   * Sum Aggregator
+   * @param {string | AggregatorInput[]} name - name of the aggregator
+   * @param {string} fieldName - field name the aggregator to be performed
+   */
+  sum(name: string | AggregatorInput[], fieldName: string = "") {
     if (Array.isArray(name)) {
+      if (name.length > 0) {
+        for (const data of name) {
+          this.aggsWrapper({
+            name: data.name,
+            fieldName: data.fieldName,
+            aggregator: "sum",
+            additionalProperties: {},
+          });
+        }
+      }
     } else {
       this.aggsWrapper({
         name: name,
@@ -234,8 +250,23 @@ export default class Transformer {
     return this;
   }
 
-  avg(name: string | AggregatorRule[], fieldName: string = "") {
+  /**
+   * Avg Aggregator [reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-avg-aggregation.html)
+   * @param {string | AggregatorInput[]} name - name of the aggregator
+   * @param {string} fieldName - field name the aggregator to be performed
+   */
+  avg(name: string | AggregatorInput[], fieldName: string = "") {
     if (Array.isArray(name)) {
+      if (name.length > 0) {
+        for (const data of name) {
+          this.aggsWrapper({
+            name: data.name,
+            fieldName: data.fieldName,
+            aggregator: "avg",
+            additionalProperties: {},
+          });
+        }
+      }
     } else {
       this.aggsWrapper({
         name: name,
@@ -248,8 +279,24 @@ export default class Transformer {
     return this;
   }
 
-  max(name: string | AggregatorRule[], fieldName: string = "") {
+  /**
+   * Max Aggregator
+   * [reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-max-aggregation.html)
+   * @param {string | AggregatorInput[]} name - name of the aggregator
+   * @param {string} fieldName - field name the aggregator to be performed
+   */
+  max(name: string | AggregatorInput[], fieldName: string = "") {
     if (Array.isArray(name)) {
+      if (name.length > 0) {
+        for (const data of name) {
+          this.aggsWrapper({
+            name: data.name,
+            fieldName: data.fieldName,
+            aggregator: "max",
+            additionalProperties: {},
+          });
+        }
+      }
     } else {
       this.aggsWrapper({
         name: name,
@@ -262,8 +309,23 @@ export default class Transformer {
     return this;
   }
 
-  min(name: string | AggregatorRule[], fieldName: string = "") {
+  /**
+   * Min Aggregator [reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-min-aggregation.html)
+   * @param {string | AggregatorInput[]} name - name of the aggregator
+   * @param {string} fieldName - field name the aggregator to be performed
+   */
+  min(name: string | AggregatorInput[], fieldName: string = "") {
     if (Array.isArray(name)) {
+      if (name.length > 0) {
+        for (const data of name) {
+          this.aggsWrapper({
+            name: data.name,
+            fieldName: data.fieldName,
+            aggregator: "min",
+            additionalProperties: {},
+          });
+        }
+      }
     } else {
       this.aggsWrapper({
         name: name,
@@ -276,6 +338,11 @@ export default class Transformer {
     return this;
   }
 
+  /**
+   * sort
+   * @param {string | Sort[]} fieldName - field name
+   * @param {"asc"|"desc"} order - order "asc" or "desc"
+   */
   sort(fieldName: string | Sort[], order: "asc" | "desc" = "asc") {
     if (Array.isArray(fieldName)) {
       this.sortRule = this.sortRule.concat(fieldName);
