@@ -9,7 +9,6 @@ import {
   TopLevelCondition,
 } from "../Types";
 import defaultOperator from "./default-operators";
-// import { Engine, TopLevelCondition as Rule } from "json-rules-engine";
 import { Engine } from "json-rules-engine";
 
 import { Validator } from "../utils";

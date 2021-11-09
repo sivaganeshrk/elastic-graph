@@ -1,5 +1,5 @@
 {
-  "name": "search-builder",
+  "name": "elastic-graph",
   "version": "1.0.0",
   "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
   "main": "./dist/index.js",
@@ -22,17 +22,19 @@
   "keywords": [
     "opensearch",
     "elasticsearch",
-    "json-rule-enigne",
-    "transformer"
+    "json-rule-engine",
+    "elastic query builder",
+    "elastic",
+    "search database"
   ],
   "author": "Siva Ganesh <sivadoog0808@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sivaganeshrk/openSearchTransformer.git"
+    "url": "https://github.com/sivaganeshrk/elastic-graph.git"
   },
-  "homepage": "https://github.com/sivaganeshrk/openSearchTransformer",
+  "homepage": "https://github.com/sivaganeshrk/elastic-graph",
   "bugs": {
-    "url": "https://github.com/sivaganeshrk/openSearchTransformer/issues"
+    "url": "https://github.com/sivaganeshrk/elastic-graph/issues"
   },
   "license": "MIT",
   "dependencies": {
