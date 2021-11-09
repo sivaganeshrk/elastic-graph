@@ -1,7 +1,7 @@
 ## elastic-graph
 
-A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query.<br/>
-<br/>
+A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query.
+
 **_Supports_**
 
 - And / OR conditions
