@@ -97,11 +97,11 @@ export class QueryBuilder {
       query.query(this.processTheRule(this.queryRule, true));
     }
 
-    if (this.from && this.from > 0) {
+    if (this.from) {
       query.from(this.from);
     }
 
-    if (this.size && this.size > 0) {
+    if (this.size) {
       query.size(this.size);
     }
 

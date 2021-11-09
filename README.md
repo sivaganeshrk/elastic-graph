@@ -192,7 +192,7 @@ queryBuilder.sort([
 - #### setRule
   json structure
 
-```json
+```js
 {
   "fact": "field-name",
   "operator": "operator Identifier",
@@ -223,12 +223,12 @@ queryBuilder.setRule({
 - setAggregator
   json format
 
-  ```json
+  ```js
   {
     "name": "aggregator name",
     "aggregator": "aggregator identifier",
     "fieldName": "name of the field aggregation to be performed",
-    "additionalProperties:{
+    "additionalProperties":{
       // Additional Properties for the aggregator
     }
   }
