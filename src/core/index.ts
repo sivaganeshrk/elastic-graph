@@ -24,8 +24,8 @@ export default class Transformer {
   private rule: TopLevelCondition | null = null;
   private aggregatorRule: AggregatorRule[] = [];
   private sortRule: Sort[] = [];
-  private _from: number = 0;
-  private _size: number = 0;
+  private _from: number | null = null;
+  private _size: number | null = null;
   constructor() {
     this.operators = new Map();
     this.aggregator = new Map();

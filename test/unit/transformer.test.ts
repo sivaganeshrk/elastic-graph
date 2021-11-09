@@ -41,7 +41,7 @@ describe("json to search Query Transformer Test", () => {
         all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
       })
       .offset(10)
-      .limit(10)
+      .limit(0)
       .toJson();
 
     expect(query).to.deep.equal({
@@ -55,7 +55,7 @@ describe("json to search Query Transformer Test", () => {
           },
         },
       },
-      size: 10,
+      size: 0,
     });
   });
 });

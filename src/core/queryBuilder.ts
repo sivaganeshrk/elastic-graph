@@ -2,6 +2,7 @@ import { AggregatorRule, TopLevelCondition, Sort } from "../Types";
 import { Aggregator } from "./aggregator";
 import { Operator } from "./operator";
 import elasticBuilder from "elastic-builder";
+import { Validator } from "../utils";
 export class QueryBuilder {
   private operators: Map<string, Operator>;
   private aggregators: Map<string, Aggregator>;
@@ -97,12 +98,12 @@ export class QueryBuilder {
       query.query(this.processTheRule(this.queryRule, true));
     }
 
-    if (this.from) {
-      query.from(this.from);
+    if (Validator.isPositiveNumber(this.from)) {
+      query.from(this.from as number);
     }
 
-    if (this.size) {
-      query.size(this.size);
+    if (Validator.isPositiveNumber(this.size)) {
+      query.size(this.size as number);
     }
 
     if (this.sortRule && this.sortRule.length > 0) {
