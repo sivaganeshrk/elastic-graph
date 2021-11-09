@@ -1,6 +1,18 @@
 ## elastic-graph
 
-`elastic-graph` is a lightweight search database query builder. it takes simple structured json and convert into a query.
+A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query.
+Supports
+And / OR conditions
+Nested conditions
+Offsets / pagination
+Basic Aggregations
+Custom operators
+Custom Aggregators
+and more
+
+Inspired By:
+[json-rules-engine](https://github.com/CacheControl/json-rules-engine)
+[elastic-builder](https://github.com/sudo-suhas/elastic-builder)
 
 ## Basic Example
 

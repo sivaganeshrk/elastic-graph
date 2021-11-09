@@ -1,7 +1,7 @@
 {
   "name": "elastic-graph",
   "version": "1.0.0",
-  "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
+  "description": "A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query",
   "main": "./dist/index.js",
   "bin": {
     "search-builder": "./dist/index.js"
