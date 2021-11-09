@@ -17,7 +17,7 @@ var Validator = /** @class */ (function () {
     Validator.isPositiveNumber = function (val) {
         var result = false;
         try {
-            result = this.isNumber(val) && val > 0;
+            result = this.isNumber(val) && val >= 0;
         }
         catch (e) {
             throw e;

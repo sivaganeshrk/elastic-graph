@@ -79,12 +79,6 @@ var QueryBuilder = /** @class */ (function () {
     };
     QueryBuilder.prototype.queryBuilder = function () {
         var _a;
-        try {
-            this.checkValues();
-        }
-        catch (error) {
-            throw error;
-        }
         var query = elastic_builder_1.default.requestBodySearch();
         if (this.queryRule) {
             query.query(this.processTheRule(this.queryRule, true));

@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var operator_1 = require("./operator");
 var default_operators_1 = __importDefault(require("./default-operators"));
-// import { Engine, TopLevelCondition as Rule } from "json-rules-engine";
 var json_rules_engine_1 = require("json-rules-engine");
 var utils_1 = require("../utils");
 var aggregator_1 = require("./aggregator");
