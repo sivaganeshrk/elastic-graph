@@ -2,18 +2,19 @@
 
 A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query.<br/>
 <br/>
-**__Supports__** <br/>
-And / OR conditions <br/>
-Nested conditions<br/>
-Offsets / pagination<br/>
-Basic Aggregations<br/>
-Custom operators<br/>
-Custom Aggregators<br/>
-and more<br/>
-<br/>
-Inspired By:<br/>
-**[json-rules-engine](https://github.com/CacheControl/json-rules-engine)**<br/>
-**[elastic-builder](https://github.com/sudo-suhas/elastic-builder)**<br/>
+**_Supports_**
+
+- And / OR conditions
+- Nested conditions
+- Offsets / pagination
+- Basic Aggregations
+- Custom operators
+- Custom Aggregators
+- and more
+
+Inspired By:
+**[json-rules-engine](https://github.com/CacheControl/json-rules-engine)**
+**[elastic-builder](https://github.com/sudo-suhas/elastic-builder)**
 
 ## Basic Example
 
