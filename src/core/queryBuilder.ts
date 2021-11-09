@@ -91,11 +91,6 @@ export class QueryBuilder {
   }
 
   queryBuilder() {
-    try {
-      this.checkValues();
-    } catch (error) {
-      throw error;
-    }
     const query = elasticBuilder.requestBodySearch();
 
     if (this.queryRule) {
