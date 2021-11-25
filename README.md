@@ -1,4 +1,6 @@
 ## elastic-graph
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsivaganeshrk%2Felastic-graph.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsivaganeshrk%2Felastic-graph?ref=badge_shield)
+
 
 A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query.
 
@@ -478,3 +480,7 @@ queryBuilder
   ])
   .toJson();
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsivaganeshrk%2Felastic-graph.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsivaganeshrk%2Felastic-graph?ref=badge_large)
