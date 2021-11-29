@@ -14,13 +14,14 @@ export class Validator {
     let result = false;
 
     try {
-      result = this.isNumber(val) && val > 0;
+      result = this.isNumber(val) && val >= 0;
     } catch (e) {
       throw e;
     }
 
     return result;
   }
+
   static isObject(val: any): boolean {
     let result = false;
 

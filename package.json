@@ -1,9 +1,11 @@
 {
-  "name": "opensearchtransformer",
-  "version": "1.0.0",
-  "description": "Convert json-rule-engine rule to openSearch(elasticSearch) Query",
-  "main": "openSearchTransformer",
-  "bin": "./dist/index.js",
+  "name": "elastic-graph",
+  "version": "1.1.1",
+  "description": "A lightweight query builder for Elastic Search and OpenSearch. You can convert a simple JSON Rule built with the popular JSON Rule Engine library and turn into a valid Elastic Search query",
+  "main": "./dist/index.js",
+  "bin": {
+    "search-builder": "./dist/index.js"
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist/",
@@ -20,18 +22,22 @@
   "keywords": [
     "opensearch",
     "elasticsearch",
-    "json-rule-enigne",
-    "transformer"
+    "json-rule-engine",
+    "elastic query builder",
+    "elastic",
+    "search database"
   ],
   "author": "Siva Ganesh <sivadoog0808@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sivaganeshrk/openSearchTransformer.git"
+    "url": "https://github.com/sivaganeshrk/elastic-graph.git"
   },
-  "homepage": "https://github.com/sivaganeshrk/openSearchTransformer",
+  "homepage": "https://github.com/sivaganeshrk/elastic-graph",
+  "bugs": {
+    "url": "https://github.com/sivaganeshrk/elastic-graph/issues"
+  },
   "license": "MIT",
   "dependencies": {
-    "@elastic/elasticsearch": "^7.15.0",
     "elastic-builder": "^2.16.0",
     "json-rules-engine": "^6.1.2",
     "luxon": "^2.0.2"

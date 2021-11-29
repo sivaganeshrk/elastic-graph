@@ -34,7 +34,31 @@ describe("json to search Query Transformer Test", () => {
       },
     });
   });
-  it("simple query with form and size", () => {
+  it("simple query with form and size 0", () => {
+    const transformer = new Transformer();
+    const query = transformer
+      .setRule({
+        all: [{ fact: "fact-1", operator: "equal", value: "testdata" }],
+      })
+      .offset(0)
+      .limit(0)
+      .toJson();
+
+    expect(query).to.deep.equal({
+      from: 0,
+      query: {
+        bool: {
+          must: {
+            term: {
+              "fact-1": "testdata",
+            },
+          },
+        },
+      },
+      size: 0,
+    });
+  });
+  it("simple query with form and size 10", () => {
     const transformer = new Transformer();
     const query = transformer
       .setRule({
