@@ -30,17 +30,23 @@ const queryBuilder = new QueryBuilder()
 
 // Usage
 queryBuilder.setRule({
-  all:[
-    any:[
-      {fact:"field-1",operator:"equal",value:"value-1"}
-      {fact:"field-2",operator:"nonEqual",value:"value-2"}
-    ],
-    all:[
-      {fact:"field-3",operator:"lessThanRelative",value:"3",additionalProperties:{
-        format:"X" // format uses the luxon time formate
-      }}
-    ]
-  ]
+  all: [
+    {
+      any: [
+        {fact: 'field-1', operator: 'equal', value: 'value-1'},
+        {fact: 'field-2', operator: 'notEqual', value: 'value-2'},
+      ],
+    },
+    {
+      all: [
+        {
+          fact: 'field-3', operator: 'lessThanRelative', value: '3', additionalProperties: {
+            format: 'X', // format uses the luxon time formate
+          },
+        },
+      ],
+    },
+  ],
 }).toJson()
 ```
 
